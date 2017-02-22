@@ -33,7 +33,6 @@ public final class EndpointPaths {
   public static final String ANNOTATIONS = "annotations";
   public static final String ANNOTATIONBATCH = "annotationbatch";
   public static final String REV = "rev";
-  public static final String ANNOTATIONBODIES = "annotationbodies";
 
   public static final String SEARCHES = "searches";
 
@@ -42,9 +41,6 @@ public final class EndpointPaths {
   public static final String RESULTPAGES = "pages";
 
   public static final String ANNOTATORS = "annotators";
-
-  public static final String WEB_ANNOTATIONS = "webannotations";
-  public static final String IIIF = "iiif";
 
   private EndpointPaths() {
     throw new AssertionError("Paths shall not be instantiated");

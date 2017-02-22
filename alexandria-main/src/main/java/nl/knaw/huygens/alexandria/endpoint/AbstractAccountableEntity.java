@@ -24,54 +24,37 @@ package nl.knaw.huygens.alexandria.endpoint;
 
 import java.net.URI;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Sets;
 
 import nl.knaw.huygens.alexandria.api.model.Entity;
 import nl.knaw.huygens.alexandria.api.model.JsonWrapperObject;
 import nl.knaw.huygens.alexandria.api.model.PropertyPrefix;
-import nl.knaw.huygens.alexandria.model.AbstractAnnotatable;
-import nl.knaw.huygens.alexandria.model.AlexandriaAnnotation;
+import nl.knaw.huygens.alexandria.model.AbstractAccountable;
 
-public abstract class AbstractAnnotatableEntity extends JsonWrapperObject implements Entity {
+public abstract class AbstractAccountableEntity extends JsonWrapperObject implements Entity {
 
   @JsonIgnore
   protected LocationBuilder locationBuilder;
 
-  abstract protected AbstractAnnotatable getAnnotatable();
-
-  @JsonProperty(PropertyPrefix.LINK + "annotations")
-  public Set<URI> getAnnotations() {
-    // Log.debug("Converting {} annotations: [{}]", getAnnotatable().getAnnotations().size(), getAnnotatable().getAnnotations());
-    // TODO: When Jackson can handle Streams, maybe return Stream<AnnotationView>.
-    final Set<URI> uris = Sets.newHashSet(getAnnotatable().getAnnotations().stream().map(this::annotationURI).iterator());
-    // Log.debug("uris: {}", uris);
-    return uris;
-  }
-
-  private URI annotationURI(AlexandriaAnnotation annotation) {
-    // Log.debug("annotationURI for: [{}], id=[{}]", annotation, annotation.getId());
-    return locationBuilder.locationOf(annotation);
-  }
+  abstract protected AbstractAccountable getAccountable();
 
   @JsonProperty(PropertyPrefix.LINK + "provenance")
   public URI getProvenance() {
-    return locationBuilder.locationOf(getAnnotatable(), "provenance");
+    return locationBuilder.locationOf(getAccountable(), "provenance");
   }
 
   public UUID getId() {
-    return getAnnotatable().getId();
+    return getAccountable().getId();
   }
 
   public Map<String, Object> getState() {
     return ImmutableMap.of(//
-        "value", getAnnotatable().getState(), //
-        "since", getAnnotatable().getStateSince().toString()//
+        "value", getAccountable().getState(), //
+        "since", getAccountable().getStateSince().toString()//
     );
   }
 }

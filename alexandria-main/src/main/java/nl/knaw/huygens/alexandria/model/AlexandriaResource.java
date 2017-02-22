@@ -32,7 +32,7 @@ import java.util.UUID;
 import jersey.repackaged.com.google.common.collect.Lists;
 import nl.knaw.huygens.alexandria.api.model.text.view.TextView;
 
-public class AlexandriaResource extends AbstractAnnotatable implements Comparable<AlexandriaResource> {
+public class AlexandriaResource extends AbstractAccountable implements Comparable<AlexandriaResource> {
   private String cargo; // ref for resource, sub for subresource
   private Optional<IdentifiablePointer<AlexandriaResource>> parentResourcePointer = Optional.empty(); // only used in subresources
   private Collection<IdentifiablePointer<AlexandriaResource>> subResourcePointers = Lists.newArrayList();

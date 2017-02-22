@@ -40,8 +40,6 @@ import nl.knaw.huygens.alexandria.api.model.text.view.TextView;
 import nl.knaw.huygens.alexandria.api.model.text.view.TextViewDefinition;
 import nl.knaw.huygens.alexandria.endpoint.search.SearchResult;
 import nl.knaw.huygens.alexandria.model.Accountable;
-import nl.knaw.huygens.alexandria.model.AlexandriaAnnotation;
-import nl.knaw.huygens.alexandria.model.AlexandriaAnnotationBody;
 import nl.knaw.huygens.alexandria.model.AlexandriaResource;
 import nl.knaw.huygens.alexandria.model.IdentifiablePointer;
 import nl.knaw.huygens.alexandria.model.TentativeAlexandriaProvenance;
@@ -68,20 +66,6 @@ public interface AlexandriaService {
 
   List<AlexandriaResource> readSubResources(UUID uuid);
 
-  AlexandriaAnnotationBody createAnnotationBody(UUID uuid, String type, String value, TentativeAlexandriaProvenance provenance);
-
-  Optional<AlexandriaAnnotationBody> readAnnotationBody(UUID uuid);
-
-  AlexandriaAnnotation annotate(AlexandriaResource resource, AlexandriaAnnotationBody annotationbody, TentativeAlexandriaProvenance provenance);
-
-  AlexandriaAnnotation annotate(AlexandriaResource resource, AlexandriaTextLocator textLocator, AlexandriaAnnotationBody annotationbody, TentativeAlexandriaProvenance provenance);
-
-  AlexandriaAnnotation annotate(AlexandriaAnnotation annotation, AlexandriaAnnotationBody annotationbody, TentativeAlexandriaProvenance provenance);
-
-  Optional<AlexandriaAnnotation> readAnnotation(UUID uuid);
-
-  Optional<AlexandriaAnnotation> readAnnotation(UUID uuid, Integer revision);
-
   Optional<? extends Accountable> dereference(IdentifiablePointer<? extends Accountable> pointer);
 
   /**
@@ -91,31 +75,14 @@ public interface AlexandriaService {
 
   TemporalAmount getTentativesTimeToLive();
 
-  /**
-   * @param oldAnnotationId the id of the {@link AlexandriaAnnotation} to deprecate
-   * @param newAnnotation   the new {@link AlexandriaAnnotation}
-   * @return the new {@link AlexandriaAnnotation} that deprecates the annotation with id oldAnnotationId
-   */
-  AlexandriaAnnotation deprecateAnnotation(UUID oldAnnotationId, AlexandriaAnnotation newAnnotation);
 
   void confirmResource(UUID id);
 
-  void confirmAnnotation(UUID id);
-
-  /**
-   * If the annotation is TENTATIVE, it will be removed from the database.
-   * Otherwise, its status will be set to DELETED
-   *
-   * @param annotation The Annotation to delete
-   */
-  void deleteAnnotation(AlexandriaAnnotation annotation);
 
   SearchResult execute(AlexandriaQuery query);
 
   // TODO: refactor these find methods to something more generic (search)
   Optional<AlexandriaResource> findSubresourceWithSubAndParentId(String sub, UUID parentId);
-
-  Optional<AlexandriaAnnotationBody> findAnnotationBodyWithTypeAndValue(String type, String value);
 
   Map<String, Object> getMetadata();
 

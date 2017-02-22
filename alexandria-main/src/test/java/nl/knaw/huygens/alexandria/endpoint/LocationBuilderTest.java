@@ -32,35 +32,11 @@ import org.junit.Test;
 
 import nl.knaw.huygens.alexandria.api.EndpointPaths;
 import nl.knaw.huygens.alexandria.config.MockConfiguration;
-import nl.knaw.huygens.alexandria.model.AlexandriaAnnotation;
-import nl.knaw.huygens.alexandria.model.AlexandriaAnnotationBody;
 import nl.knaw.huygens.alexandria.model.AlexandriaResource;
 import nl.knaw.huygens.alexandria.model.TentativeAlexandriaProvenance;
 
 public class LocationBuilderTest {
   LocationBuilder lb = new LocationBuilder(new MockConfiguration(), new EndpointPathResolver());
-
-  @Test
-  public void testGetLocationOfAlexandriaAnnotationWithUUID() {
-    UUID randomUUID = UUID.randomUUID();
-    TentativeAlexandriaProvenance provenance = mock(TentativeAlexandriaProvenance.class);
-    AlexandriaAnnotationBody body = mock(AlexandriaAnnotationBody.class);
-    AlexandriaAnnotation annotation = new AlexandriaAnnotation(randomUUID, body, provenance);
-
-    URI locationOf = lb.locationOf(annotation);
-
-    assertThat(locationOf.toString()).isEqualTo("http://alexandria.eg/annotations/" + randomUUID);
-  }
-
-  @Test
-  public void testGetLocationOfDeprecatedAlexandriaAnnotation() {
-    UUID randomUUID = UUID.randomUUID();
-    String deprecatedId = randomUUID.toString() + ".0";
-
-    URI locationOf = lb.locationOf(AlexandriaAnnotation.class, deprecatedId);
-
-    assertThat(locationOf.toString()).isEqualTo("http://alexandria.eg/annotations/" + randomUUID + "/" + EndpointPaths.REV + "/0");
-  }
 
   @Test
   public void testGetLocationOfAlexandriaResourceWithUUID() {

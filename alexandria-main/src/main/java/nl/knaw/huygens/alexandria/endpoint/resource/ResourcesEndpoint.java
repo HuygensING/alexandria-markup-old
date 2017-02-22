@@ -161,12 +161,6 @@ public class ResourcesEndpoint extends JSONEndpoint {
     return SubResourcesEndpoint.class; // no instantiation of our own; let Jersey handle the lifecycle
   }
 
-  @Path("{uuid}/" + ANNOTATIONS)
-  public Class<ResourceAnnotationsEndpoint> getAnnotationsEndpoint(@PathParam("uuid") final UUIDParam uuidParam) {
-    assertResourceIsConfirmed(uuidParam);
-    return ResourceAnnotationsEndpoint.class; // no instantiation of our own; let Jersey handle the lifecycle
-  }
-
   @Path("{uuid}/" + ANNOTATORS)
   public Class<ResourceAnnotatorsEndpoint> getAnnotatorsEndpoint(@PathParam("uuid") final UUIDParam uuidParam) {
     assertResourceIsConfirmed(uuidParam);

@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.knaw.huygens.alexandria</groupId>
-  <artifactId>alexandria</artifactId>
+  <artifactId>alexandria-markup</artifactId>
   <packaging>pom</packaging>
   <version>2.0-SNAPSHOT</version>
   <name>Alexandria Text Repository</name>
@@ -12,17 +12,11 @@
   <modules>
     <module>alexandria-acceptance-tests</module>
     <module>alexandria-api</module>
-    <module>alexandria-aql</module>
-    <module>alexandria-aql2</module>
     <module>alexandria-java-client</module>
     <module>alexandria-main</module>
     <module>alexandria-server</module>
-    <module>alexandria-service-tinkerpop-neo4j</module>
-    <module>alexandria-service-tinkerpop-tinkergraph</module>
-    <module>alexandria-service-tinkerpop-titan</module>
     <module>alexandria-service</module>
     <module>alexandria-test</module>
-    <module>alexandria-webapp</module>
   </modules>
 
   <properties>

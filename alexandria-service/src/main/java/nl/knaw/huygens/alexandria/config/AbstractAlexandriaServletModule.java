@@ -44,7 +44,6 @@ public abstract class AbstractAlexandriaServletModule extends ServletModule {
     Class<? extends TinkerPopService> tinkerpopServiceClass = getTinkerPopServiceClass();
     bind(AlexandriaService.class).to(tinkerpopServiceClass);
     bind(TinkerPopService.class).to(tinkerpopServiceClass);
-    bind(AnnotationEntityBuilder.class).in(Scopes.SINGLETON);
     bind(ResourceEntityBuilder.class).in(Scopes.SINGLETON);
     bind(Scheduler.class).in(Scopes.SINGLETON);
     ExecutorService executorService = Executors.newFixedThreadPool(NTHREADS);

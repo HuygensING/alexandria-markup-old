@@ -29,8 +29,6 @@ import java.util.UUID;
 import org.concordion.integration.junit4.ConcordionRunner;
 import org.junit.runner.RunWith;
 
-import nl.knaw.huygens.alexandria.model.AlexandriaAnnotationBody;
-
 @RunWith(ConcordionRunner.class)
 public class AnatomyFixture extends ResourcesBase {
 

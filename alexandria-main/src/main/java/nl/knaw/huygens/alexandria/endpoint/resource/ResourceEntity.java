@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.annotations.ApiModel;
 import nl.knaw.huygens.alexandria.api.JsonTypeNames;
 import nl.knaw.huygens.alexandria.endpoint.LocationBuilder;
-import nl.knaw.huygens.alexandria.model.AbstractAnnotatable;
+import nl.knaw.huygens.alexandria.model.AbstractAccountable;
 import nl.knaw.huygens.alexandria.model.AlexandriaResource;
 
 @JsonTypeName(JsonTypeNames.RESOURCE)
@@ -61,7 +61,7 @@ public class ResourceEntity extends AbstractResourceEntity {
   }
 
   @Override
-  protected AbstractAnnotatable getAnnotatable() {
+  protected AbstractAccountable getAccountable() {
     return resource;
   }
 

@@ -31,10 +31,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import nl.knaw.huygens.alexandria.api.EndpointPaths;
 import nl.knaw.huygens.alexandria.api.model.PropertyPrefix;
-import nl.knaw.huygens.alexandria.endpoint.AbstractAnnotatableEntity;
+import nl.knaw.huygens.alexandria.endpoint.AbstractAccountableEntity;
 import nl.knaw.huygens.alexandria.model.AlexandriaResource;
 
-public abstract class AbstractResourceEntity extends AbstractAnnotatableEntity {
+public abstract class AbstractResourceEntity extends AbstractAccountableEntity {
 
   public AbstractResourceEntity() {
     super();
@@ -55,7 +55,7 @@ public abstract class AbstractResourceEntity extends AbstractAnnotatableEntity {
   }
 
   private AlexandriaResource getResource() {
-    return (AlexandriaResource) getAnnotatable();
+    return (AlexandriaResource) getAccountable();
   }
 
 }
