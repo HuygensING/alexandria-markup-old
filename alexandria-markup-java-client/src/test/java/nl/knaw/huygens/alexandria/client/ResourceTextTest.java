@@ -46,7 +46,7 @@ public class ResourceTextTest extends AlexandriaClientTest {
     UUID resourceUuid = createResource(resourceRef);
     String xml = "<text>Something</text>";
     TextImportStatus textGraphImportStatus = setResourceText(resourceUuid, xml);
-    URI expectedURI = URI.create("http://localhost:2016/resources/" + resourceUuid + "/text/xml");
+    URI expectedURI = URI.create("http://localhost:2017/resources/" + resourceUuid + "/text/xml");
     assertThat(textGraphImportStatus.getTextURI()).isEqualTo(expectedURI);
 
     RestResult<TextEntity> textInfoResult = client.getTextInfo(resourceUuid);
@@ -79,7 +79,7 @@ public class ResourceTextTest extends AlexandriaClientTest {
     UUID resourceUuid = createResource("test");
     String xml = singleQuotesToDouble("<text><pb n='1' xml:id='pb-1'/><p><figure><graphic url='beec002jour04ill02.gif'/></figure></p></text>");
     TextImportStatus textGraphImportStatus = setResourceText(resourceUuid, xml);
-    URI expectedURI = URI.create("http://localhost:2016/resources/" + resourceUuid + "/text/xml");
+    URI expectedURI = URI.create("http://localhost:2017/resources/" + resourceUuid + "/text/xml");
     assertThat(textGraphImportStatus.getTextURI()).isEqualTo(expectedURI);
 
     RestResult<String> xmlReadResult = client.getTextAsString(resourceUuid);

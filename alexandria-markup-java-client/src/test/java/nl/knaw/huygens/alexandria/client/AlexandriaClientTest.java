@@ -38,7 +38,7 @@ import nl.knaw.huygens.alexandria.client.model.SubResourcePrototype;
 public abstract class AlexandriaClientTest extends AlexandriaTestWithTestServer {
   static final String AUTHKEY = "AUTHKEY";
 
-  protected static URI testURI = URI.create("http://localhost:2016/");
+  protected static URI testURI = URI.create("http://localhost:2017/");
 
   static AlexandriaClient client;
 

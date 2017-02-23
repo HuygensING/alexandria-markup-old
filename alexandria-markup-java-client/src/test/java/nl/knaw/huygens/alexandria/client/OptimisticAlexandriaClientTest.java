@@ -71,7 +71,7 @@ public class OptimisticAlexandriaClientTest extends AlexandriaTestWithTestServer
 
   @BeforeClass
   public static void startClient() {
-    client = new OptimisticAlexandriaClient("http://localhost:2016/");
+    client = new OptimisticAlexandriaClient("http://localhost:2017/");
   }
 
   @AfterClass
@@ -1235,7 +1235,7 @@ public class OptimisticAlexandriaClientTest extends AlexandriaTestWithTestServer
     String resourceRef = "test";
     UUID resourceUUID = createResource(resourceRef);
     TextImportStatus textGraphImportStatus = setResourceText(resourceUUID, xml);
-    URI expectedURI = URI.create("http://localhost:2016/resources/" + resourceUUID + "/text/xml");
+    URI expectedURI = URI.create("http://localhost:2017/resources/" + resourceUUID + "/text/xml");
     assertThat(textGraphImportStatus.getTextURI()).isEqualTo(expectedURI);
     return resourceUUID;
   }

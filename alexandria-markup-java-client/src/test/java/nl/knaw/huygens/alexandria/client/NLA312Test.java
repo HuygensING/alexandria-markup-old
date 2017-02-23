@@ -45,7 +45,7 @@ public class NLA312Test extends AlexandriaTest {
 
   @BeforeClass
   public static void startClient() {
-    client = new OptimisticAlexandriaClient("http://localhost:2015/");
+    client = new OptimisticAlexandriaClient("http://localhost:2017/");
     client.setAuthKey("admin");
   }
 
@@ -221,7 +221,7 @@ public class NLA312Test extends AlexandriaTest {
     String resourceRef = "test";
     UUID resourceUUID = createResource(resourceRef);
     TextImportStatus textGraphImportStatus = setResourceText(resourceUUID, xml);
-    URI expectedURI = URI.create("http://localhost:2015/resources/" + resourceUUID + "/text/xml");
+    URI expectedURI = URI.create("http://localhost:2017/resources/" + resourceUUID + "/text/xml");
     assertThat(textGraphImportStatus.getTextURI()).isEqualTo(expectedURI);
     return resourceUUID;
   }

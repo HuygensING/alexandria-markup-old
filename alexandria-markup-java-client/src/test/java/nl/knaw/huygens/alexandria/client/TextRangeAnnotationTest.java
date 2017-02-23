@@ -439,7 +439,7 @@ public class TextRangeAnnotationTest extends AlexandriaClientTest {
     String resourceRef = "test";
     UUID resourceUUID = createResource(resourceRef);
     TextImportStatus textGraphImportStatus = setResourceText(resourceUUID, xml);
-    URI expectedURI = URI.create("http://localhost:2016/resources/" + resourceUUID + "/text/xml");
+    URI expectedURI = URI.create("http://localhost:2017/resources/" + resourceUUID + "/text/xml");
     assertThat(textGraphImportStatus.getTextURI()).isEqualTo(expectedURI);
     return resourceUUID;
   }

@@ -50,7 +50,7 @@ public class ServerConfiguration extends AbstractAlexandriaConfigurationUsingAle
   private static final String PROPERTY_STORAGE_DIRECTORY = "storageDirectory";
   private static final String PROPERTY_BASE_URI = "baseURI";
 
-  private static final String DEFAULT_BASE_URI = "http://localhost:2015/";
+  private static final String DEFAULT_BASE_URI = "http://localhost:2017/";
   private static final String DEFAULT_STORAGE_DIRECTORY = new File(ALEXANDRIA_ROOT, "data").getAbsolutePath();
   private static final String DEFAULT_ADMIN_KEY = "admin";
 

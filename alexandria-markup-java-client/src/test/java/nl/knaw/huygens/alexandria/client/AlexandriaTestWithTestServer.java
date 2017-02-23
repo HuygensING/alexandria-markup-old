@@ -62,7 +62,7 @@ import nl.knaw.huygens.alexandria.test.AlexandriaTest;
 public abstract class AlexandriaTestWithTestServer extends AlexandriaTest {
   static final String AUTHKEY = "AUTHKEY";
 
-  protected static URI testURI = URI.create("http://localhost:2016/");
+  protected static URI testURI = URI.create("http://localhost:2017/");
   private static HttpServer testServer;
   private static AlexandriaConfiguration testConfig = new AlexandriaConfiguration() {
     @Override

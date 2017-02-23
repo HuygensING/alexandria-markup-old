@@ -52,15 +52,13 @@ public class AnnotatorsTest extends AlexandriaClientTest {
     Annotator annotator2 = getResult.get();
     assertThat(annotator2.getCode()).isEqualTo(code);
     assertThat(annotator2.getDescription()).isEqualTo(description);
-    assertThat(annotator2.getResourceURI()).hasToString("http://localhost:2016/resources/" + resourceUuid);
+    assertThat(annotator2.getResourceURI()).hasToString("http://localhost:2017/resources/" + resourceUuid);
   }
 
   private void setResourceAnnotator(UUID resourceUuid, String code, String description) {
     Annotator annotator = new Annotator().setDescription(description);
     RestResult<Void> putResult = client.setAnnotator(resourceUuid, code, annotator);
     assertRequestSucceeded(putResult);
-    // URI uri = putResult.get();
-    // assertThat(uri).hasToString("http://localhost:2016/resources/" + resourceUuid + "/annotators/abc");
   }
 
   @Test
