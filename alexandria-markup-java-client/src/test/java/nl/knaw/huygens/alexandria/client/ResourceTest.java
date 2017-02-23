@@ -159,33 +159,6 @@ public class ResourceTest extends AlexandriaClientTest {
   }
 
   @Test
-  public void testGetAnnotationsFromResourceUUID() {
-    client.setAuthKey(AUTHKEY);
-    String ref = "resource4";
-    ResourcePrototype resource = new ResourcePrototype().setRef(ref).setProvenance(new ProvenancePojo().setWho("test4").setWhy("because test4"));
-    UUID resourceId = UUID.fromString("11111111-1111-1111-1111-111111111112");
-    RestResult<Void> result = client.setResource(resourceId, resource);
-    assertRequestSucceeded(result);
-
-    // add annotations
-    RestResult<UUID> annotateResourceResult1 = client.annotateResource(resourceId, new AnnotationPrototype().setType("typeUno").setValue("valueUno"));
-    assertRequestSucceeded(annotateResourceResult1);
-    AnnotationPojo annotation1 = client.getAnnotation(annotateResourceResult1.get()).get();
-
-    RestResult<UUID> annotateResourceResult2 = client.annotateResource(resourceId, new AnnotationPrototype().setType("typeDos").setValue("valueDos"));
-    assertRequestSucceeded(annotateResourceResult2);
-    AnnotationPojo annotation2 = client.getAnnotation(annotateResourceResult2.get()).get();
-
-    // retrieve the resource
-    RestResult<AnnotationList> annotationsResult = client.getResourceAnnotations(resourceId);
-    assertRequestSucceeded(annotationsResult);
-    AnnotationList annotationList = annotationsResult.get();
-    softly.assertThat(annotationList).as("entity != null").isNotNull();
-    softly.assertThat(annotationList).hasSize(2);
-    softly.assertThat(annotationList).containsExactly(annotation2, annotation1);
-  }
-
-  @Test
   public void testGetSubresourcesFromResourceUUID() {
     client.setAuthKey(AUTHKEY);
     String ref = "resource5";
