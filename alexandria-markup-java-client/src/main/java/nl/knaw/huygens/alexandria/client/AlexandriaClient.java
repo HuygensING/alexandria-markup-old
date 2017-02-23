@@ -43,8 +43,6 @@ import nl.knaw.huygens.alexandria.api.model.AnnotatorList;
 import nl.knaw.huygens.alexandria.api.model.CommandResponse;
 import nl.knaw.huygens.alexandria.api.model.CommandStatus;
 import nl.knaw.huygens.alexandria.api.model.StatePrototype;
-import nl.knaw.huygens.alexandria.api.model.search.AlexandriaQuery;
-import nl.knaw.huygens.alexandria.api.model.search.SearchResultPage;
 import nl.knaw.huygens.alexandria.api.model.text.TextAnnotationImportStatus;
 import nl.knaw.huygens.alexandria.api.model.text.TextEntity;
 import nl.knaw.huygens.alexandria.api.model.text.TextImportStatus;
@@ -85,7 +83,7 @@ import nl.knaw.huygens.alexandria.client.model.SubResourcePrototype;
  */
 
 public class AlexandriaClient implements AutoCloseable {
-  public static final Map<String,String> NO_VIEW_PARAMETERS = Collections.emptyMap();
+  public static final Map<String, String> NO_VIEW_PARAMETERS = Collections.emptyMap();
 
   private WebTarget rootTarget;
   private String authHeader = "";
@@ -483,32 +481,6 @@ public class AlexandriaClient implements AutoCloseable {
         .getResult();
   }
 
-  public RestResult<UUID> addSearch(AlexandriaQuery query) {
-    final Entity<AlexandriaQuery> entity = Entity.json(query);
-    final WebTarget path = rootTarget.path(EndpointPaths.SEARCHES);
-    final Supplier<Response> responseSupplier = authorizedPost(path, entity);
-    final RestRequester<UUID> requester = RestRequester.withResponseSupplier(responseSupplier);
-    return requester//
-        .onStatus(Status.CREATED, this::uuidFromLocationHeader)//
-        .getResult();
-  }
-
-  public RestResult<SearchResultPage> getSearchResultPage(UUID searchId) {
-    return getSearchResultPage(searchId, 1);
-  }
-
-  public RestResult<SearchResultPage> getSearchResultPage(UUID searchId, Integer page) {
-    final WebTarget path = rootTarget//
-        .path(EndpointPaths.SEARCHES)//
-        .path(searchId.toString())//
-        .path(EndpointPaths.RESULTPAGES)//
-        .path(page.toString());
-    final RestRequester<SearchResultPage> requester = RestRequester.withResponseSupplier(anonymousGet(path));
-    return requester//
-        .onStatus(Status.OK, this::toSearchResultPageRestResult)//
-        .getResult();
-  }
-
   public RestResult<CommandResponse> doCommand(String commandName, Map<String, Object> parameters) {
     final Entity<Map<String, Object>> entity = Entity.json(parameters);
     final WebTarget path = rootTarget.path(EndpointPaths.COMMANDS).path(commandName);
@@ -634,10 +606,6 @@ public class AlexandriaClient implements AutoCloseable {
 
   private RestResult<TextViewList> toTextViewListRestResult(final Response response) {
     return toEntityRestResult(response, TextViewList.class);
-  }
-
-  private RestResult<SearchResultPage> toSearchResultPageRestResult(final Response response) {
-    return toEntityRestResult(response, SearchResultPage.class);
   }
 
   private RestResult<CommandResponse> toCommandResponseRestResult(final Response response) {

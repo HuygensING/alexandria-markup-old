@@ -38,8 +38,6 @@ import nl.knaw.huygens.alexandria.api.model.Annotator;
 import nl.knaw.huygens.alexandria.api.model.AnnotatorList;
 import nl.knaw.huygens.alexandria.api.model.CommandResponse;
 import nl.knaw.huygens.alexandria.api.model.CommandStatus;
-import nl.knaw.huygens.alexandria.api.model.search.AlexandriaQuery;
-import nl.knaw.huygens.alexandria.api.model.search.SearchResultPage;
 import nl.knaw.huygens.alexandria.api.model.text.TextAnnotationImportStatus;
 import nl.knaw.huygens.alexandria.api.model.text.TextEntity;
 import nl.knaw.huygens.alexandria.api.model.text.TextImportStatus;
@@ -262,18 +260,6 @@ public class OptimisticAlexandriaClient {
 
   public AnnotationPojo getAnnotationRevision(UUID uuid, Integer revision) {
     return unwrap(delegate.getAnnotationRevision(uuid, revision));
-  }
-
-  public UUID addSearch(AlexandriaQuery query) {
-    return unwrap(delegate.addSearch(query));
-  }
-
-  public SearchResultPage getSearchResultPage(UUID uuid) {
-    return unwrap(delegate.getSearchResultPage(uuid));
-  }
-
-  public SearchResultPage getSearchResultPage(UUID searchId, Integer page) {
-    return unwrap(delegate.getSearchResultPage(searchId, page));
   }
 
   public CommandResponse doCommand(String commandName, Map<String, Object> parameters) {
