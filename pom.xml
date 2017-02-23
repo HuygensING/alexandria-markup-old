@@ -10,13 +10,12 @@
   <inceptionYear>2015</inceptionYear>
 
   <modules>
-    <module>alexandria-acceptance-tests</module>
-    <module>alexandria-api</module>
-    <module>alexandria-java-client</module>
-    <module>alexandria-main</module>
-    <module>alexandria-server</module>
-    <module>alexandria-service</module>
-    <module>alexandria-test</module>
+    <module>alexandria-markup-acceptance-tests</module>
+    <module>alexandria-markup-api</module>
+    <module>alexandria-markup-java-client</module>
+    <module>alexandria-markup-main</module>
+    <module>alexandria-markup-server</module>
+    <module>alexandria-markup-service</module>
   </modules>
 
   <properties>
