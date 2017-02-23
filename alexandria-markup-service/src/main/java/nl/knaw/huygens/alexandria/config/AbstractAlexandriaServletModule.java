@@ -28,7 +28,6 @@ import java.util.concurrent.Executors;
 import com.google.inject.Scopes;
 import com.google.inject.servlet.ServletModule;
 
-import nl.knaw.huygens.alexandria.endpoint.annotation.AnnotationEntityBuilder;
 import nl.knaw.huygens.alexandria.endpoint.resource.ResourceEntityBuilder;
 import nl.knaw.huygens.alexandria.service.AlexandriaService;
 import nl.knaw.huygens.alexandria.service.TinkerPopService;

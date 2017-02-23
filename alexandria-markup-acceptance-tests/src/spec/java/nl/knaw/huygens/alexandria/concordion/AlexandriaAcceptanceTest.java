@@ -56,7 +56,6 @@ import nl.knaw.huygens.alexandria.api.model.Annotator;
 import nl.knaw.huygens.alexandria.config.AlexandriaConfiguration;
 import nl.knaw.huygens.alexandria.endpoint.EndpointPathResolver;
 import nl.knaw.huygens.alexandria.endpoint.LocationBuilder;
-import nl.knaw.huygens.alexandria.endpoint.annotation.AnnotationEntityBuilder;
 import nl.knaw.huygens.alexandria.endpoint.resource.ResourceEntityBuilder;
 import nl.knaw.huygens.alexandria.model.AlexandriaResource;
 import nl.knaw.huygens.alexandria.model.Identifiable;
@@ -141,7 +140,6 @@ public class AlexandriaAcceptanceTest extends RestFixture {
         bind(TinkerPopService.class).to(TinkerGraphService.class);
         bind(AlexandriaService.class).toInstance(service);
         bind(AlexandriaConfiguration.class).toInstance(CONFIG);
-        bind(AnnotationEntityBuilder.class).in(Scopes.SINGLETON);
         bind(EndpointPathResolver.class).in(Scopes.SINGLETON);
         bind(ResourceEntityBuilder.class).in(Scopes.SINGLETON);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -164,7 +162,6 @@ public class AlexandriaAcceptanceTest extends RestFixture {
   public String uuid() {
     return Iterables.getLast(Splitter.on('/').split(location().orElse("(not set)")));
   }
-
 
   public void clearStorage() {
     Log.debug("Clearing Storage");
@@ -222,10 +219,6 @@ public class AlexandriaAcceptanceTest extends RestFixture {
     return service().readResource(resId).get();
   }
 
-  protected String annotate(AlexandriaResource resource, AlexandriaAnnotationBody annotationBody, TentativeAlexandriaProvenance provenance) {
-    return idOf(service.annotate(resource, annotationBody, provenance));
-  }
-
   protected TentativeAlexandriaProvenance aProvenance() {
     return new TentativeAlexandriaProvenance("nederlab", Instant.now(), "details warranting this object's existence");
   }
@@ -236,28 +229,6 @@ public class AlexandriaAcceptanceTest extends RestFixture {
 
   protected String aSub() {
     return "/some/folia/expression/" + nextUniqueExpressionNumber.getAndIncrement();
-  }
-
-  protected UUID hasConfirmedAnnotation(AlexandriaResource resource, AlexandriaAnnotationBody annotationBody) {
-    return hasConfirmedAnnotation(resource, annotationBody, aProvenance());
-  }
-
-  protected UUID hasConfirmedAnnotation(AlexandriaResource resource, AlexandriaAnnotationBody annotationBody, TentativeAlexandriaProvenance provenance) {
-    final UUID annotationId = service().annotate(resource, annotationBody, provenance).getId();
-    service().confirmAnnotation(annotationId);
-    return annotationId;
-  }
-
-  protected AlexandriaAnnotationBody anAnnotation() {
-    return anAnnotation("t", "v");
-  }
-
-  protected AlexandriaAnnotationBody anAnnotation(String type, String value) {
-    return anAnnotation(type, value, aProvenance());
-  }
-
-  protected AlexandriaAnnotationBody anAnnotation(String type, String value, TentativeAlexandriaProvenance provenance) {
-    return service().createAnnotationBody(randomUUID(), type, value, provenance);
   }
 
 }

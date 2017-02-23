@@ -33,12 +33,10 @@ import java.util.stream.Stream;
 import nl.knaw.huygens.alexandria.api.model.AlexandriaState;
 import nl.knaw.huygens.alexandria.api.model.Annotator;
 import nl.knaw.huygens.alexandria.api.model.AnnotatorList;
-import nl.knaw.huygens.alexandria.api.model.search.AlexandriaQuery;
 import nl.knaw.huygens.alexandria.api.model.text.TextRangeAnnotation;
 import nl.knaw.huygens.alexandria.api.model.text.TextRangeAnnotationList;
 import nl.knaw.huygens.alexandria.api.model.text.view.TextView;
 import nl.knaw.huygens.alexandria.api.model.text.view.TextViewDefinition;
-import nl.knaw.huygens.alexandria.endpoint.search.SearchResult;
 import nl.knaw.huygens.alexandria.model.Accountable;
 import nl.knaw.huygens.alexandria.model.AlexandriaResource;
 import nl.knaw.huygens.alexandria.model.IdentifiablePointer;
@@ -46,7 +44,6 @@ import nl.knaw.huygens.alexandria.model.TentativeAlexandriaProvenance;
 import nl.knaw.huygens.alexandria.textgraph.ParseResult;
 import nl.knaw.huygens.alexandria.textgraph.TextAnnotation;
 import nl.knaw.huygens.alexandria.textgraph.TextGraphSegment;
-import nl.knaw.huygens.alexandria.textlocator.AlexandriaTextLocator;
 
 public interface AlexandriaService {
   // NOTE: should these service methods all be atomic?
@@ -75,11 +72,7 @@ public interface AlexandriaService {
 
   TemporalAmount getTentativesTimeToLive();
 
-
   void confirmResource(UUID id);
-
-
-  SearchResult execute(AlexandriaQuery query);
 
   // TODO: refactor these find methods to something more generic (search)
   Optional<AlexandriaResource> findSubresourceWithSubAndParentId(String sub, UUID parentId);
@@ -134,6 +127,5 @@ public interface AlexandriaService {
   void updateTextAnnotation(TextAnnotation textAnnotation);
 
   void wrapContentInChildTextAnnotation(TextAnnotation existingTextAnnotation, TextAnnotation newChildTextAnnotation);
-
 
 }

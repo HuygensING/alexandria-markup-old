@@ -47,7 +47,6 @@ import com.squarespace.jersey2.guice.BootstrapUtils;
 import nl.knaw.huygens.Log;
 import nl.knaw.huygens.alexandria.config.AlexandriaConfiguration;
 import nl.knaw.huygens.alexandria.endpoint.EndpointPathResolver;
-import nl.knaw.huygens.alexandria.endpoint.annotation.AnnotationEntityBuilder;
 import nl.knaw.huygens.alexandria.endpoint.resource.ResourceEntityBuilder;
 import nl.knaw.huygens.alexandria.service.AlexandriaService;
 
@@ -135,7 +134,6 @@ public abstract class EndpointTest extends JerseyTest {
       Log.trace("setting up Guice bindings");
       bind(AlexandriaService.class).toInstance(serviceInstance);
       bind(AlexandriaConfiguration.class).toInstance(CONFIG);
-      bind(AnnotationEntityBuilder.class).in(Scopes.SINGLETON);
       bind(EndpointPathResolver.class).in(Scopes.SINGLETON);
       bind(ResourceEntityBuilder.class).in(Scopes.SINGLETON);
     }

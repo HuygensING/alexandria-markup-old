@@ -29,8 +29,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import nl.knaw.huygens.alexandria.endpoint.command.XpathCommand.XPathResult;
-import nl.knaw.huygens.alexandria.endpoint.command.XpathCommand.XPathResult.Type;
+import nl.knaw.huygens.alexandria.api.model.text.XPathResult;
+import nl.knaw.huygens.alexandria.api.model.text.XPathResult.Type;
 import nl.knaw.huygens.alexandria.test.AlexandriaTest;
 
 public class XpathCommandTest extends AlexandriaTest {

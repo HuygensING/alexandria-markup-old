@@ -45,7 +45,6 @@ import nl.knaw.huygens.alexandria.api.model.AlexandriaState;
 import nl.knaw.huygens.alexandria.endpoint.EndpointPathResolver;
 import nl.knaw.huygens.alexandria.endpoint.LocationBuilder;
 import nl.knaw.huygens.alexandria.endpoint.UUIDParam;
-import nl.knaw.huygens.alexandria.endpoint.annotation.AnnotationsEndpoint;
 import nl.knaw.huygens.alexandria.endpoint.resource.ResourceCreationRequestBuilder;
 import nl.knaw.huygens.alexandria.endpoint.resource.ResourceEntityBuilder;
 import nl.knaw.huygens.alexandria.endpoint.resource.ResourcePrototype;
@@ -61,8 +60,6 @@ public class EndpointsTest extends TinkergraphServiceEndpointTest {
   public static void registerEndpoint() {
     om.registerModule(new Jdk8Module());
     register(ResourcesEndpoint.class);
-    register(AnnotationsEndpoint.class);
-    register(ResourceAnnotationsEndpoint.class);
   }
 
   @Test
@@ -112,58 +109,9 @@ public class EndpointsTest extends TinkergraphServiceEndpointTest {
     assertThat(resource.getState()).isEqualTo(AlexandriaState.CONFIRMED);
   }
 
-  @Test
-  public void testPostResourceAnnotationSetsStateToTentativeAndPutConfirmedToState() {
-    Response response = target(ROOTPATH).request().post(jsonEntity("{'resource':{'ref':'REF'}}"));
-    Log.debug("response={}", response);
-    assertThat(response.getLocation().toString()).contains("/resources/");
-    assertThat(response.getStatus()).isEqualTo(Status.CREATED.getStatusCode());
-
-    UUID id = extractId(response);
-    Log.debug("resource uuid={}", id);
-    AlexandriaResource resource = getService().readResource(id).get();
-    assertThat(resource.getState()).isEqualTo(AlexandriaState.TENTATIVE);
-
-    response = target(ROOTPATH).path(id.toString()).path("state").request().put(jsonEntity("{'state':'CONFIRMED'}"));
-    assertThat(response.getStatus()).isEqualTo(Status.NO_CONTENT.getStatusCode());
-
-    resource = getService().readResource(id).get();
-    assertThat(resource.getState()).isEqualTo(AlexandriaState.CONFIRMED);
-
-    response = target(ROOTPATH).path(id.toString()).path("annotations").request().post(jsonEntity("{'annotation':{'value':'bladiebla'}}"));
-    assertThat(response.getStatus()).isEqualTo(Status.CREATED.getStatusCode());
-
-    UUID annotationId = extractId(response);
-    Log.debug("annotation uuid={}", annotationId);
-    AlexandriaAnnotation annotation = getService().readAnnotation(annotationId).get();
-    assertThat(annotation.getState()).isEqualTo(AlexandriaState.TENTATIVE);
-
-    response = target("annotations").path(annotationId.toString()).path("state").request().put(jsonEntity("{'state':'CONFIRMED'}"));
-    assertThat(response.getStatus()).isEqualTo(Status.NO_CONTENT.getStatusCode());
-
-    annotation = getService().readAnnotation(annotationId).get();
-    assertThat(annotation.getState()).isEqualTo(AlexandriaState.CONFIRMED);
-  }
-
   private UUID extractId(Response response) {
     String[] parts = response.getLocation().getPath().split("/");
     return UUID.fromString(parts[parts.length - 1]);
-  }
-
-  @Test
-  public void testPutAndAnnotate() {
-    UUID uuid = UUID.randomUUID();
-    Entity<String> resourcePrototype = jsonEntity("{'resource':{'id':'" + uuid.toString() + "','ref':'Jan Klaassen'}}");
-    Response response = target(ROOTPATH).path(uuid.toString()).request().put(resourcePrototype);
-    Log.debug("response={}", response);
-    assertThat(response.getLocation().toString()).contains("/resources/");
-    assertThat(response.getStatus()).isEqualTo(Status.CREATED.getStatusCode());
-
-    Entity<String> annotationPrototype = jsonEntity("{'annotation':{'type':'Tag','value':'Bookmark'}}");
-    Response annotateResponse = target(ROOTPATH).path(uuid.toString()).path("annotations").request().post(annotationPrototype);
-    Log.debug("response={}", annotateResponse);
-    assertThat(annotateResponse.getStatus()).isEqualTo(Status.CREATED.getStatusCode());
-    Log.debug("response.location={}", annotateResponse.getLocation());
   }
 
   @Ignore

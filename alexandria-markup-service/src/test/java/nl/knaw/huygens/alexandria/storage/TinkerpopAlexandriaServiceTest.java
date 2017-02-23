@@ -49,7 +49,6 @@ import nl.knaw.huygens.alexandria.model.AlexandriaResource;
 import nl.knaw.huygens.alexandria.model.IdentifiablePointer;
 import nl.knaw.huygens.alexandria.model.TentativeAlexandriaProvenance;
 import nl.knaw.huygens.alexandria.service.TinkerPopService;
-import nl.knaw.huygens.alexandria.storage.frames.AnnotationVF;
 
 public class TinkerpopAlexandriaServiceTest {
   private static Storage mockStorage = mock(Storage.class);
@@ -74,35 +73,6 @@ public class TinkerpopAlexandriaServiceTest {
     AlexandriaState state = AlexandriaState.CONFIRMED;
     boolean created = service.createOrUpdateResource(uuid, ref, provenance, state);
     assertThat(created).isTrue();
-  }
-
-  @Ignore
-  @Test
-  // TODO: fix test
-  public void testDereferenceWithExistingAnnotation() {
-    UUID id = UUID.randomUUID();
-    AlexandriaAnnotationBody body = mock(AlexandriaAnnotationBody.class);
-    TentativeAlexandriaProvenance provenance = new TentativeAlexandriaProvenance("who", Instant.now(), "why");
-    AnnotationVF annotationVF = mock(AnnotationVF.class);
-    when(annotationVF.getUuid()).thenReturn(id.toString());
-    when(annotationVF.getProvenanceWhen()).thenReturn(Instant.now().toString());
-    when(mockStorage.readVF(AnnotationVF.class, id)).thenReturn(Optional.of(annotationVF));
-    IdentifiablePointer<AlexandriaAnnotation> ap = new IdentifiablePointer<>(AlexandriaAnnotation.class, id.toString());
-
-    Optional<? extends Accountable> optional = service.dereference(ap);
-    assertThat(optional).isPresent();
-    AlexandriaAnnotation annotation = (AlexandriaAnnotation) optional.get();
-    assertThat(annotation.getId()).isEqualTo(id);
-  }
-
-  @Test
-  public void testDereferenceWithNonExistingAnnotation() {
-    UUID id = UUID.randomUUID();
-    when(mockStorage.readVF(AnnotationVF.class, id)).thenReturn(Optional.empty());
-    IdentifiablePointer<AlexandriaAnnotation> ap = new IdentifiablePointer<>(AlexandriaAnnotation.class, id.toString());
-
-    Optional<? extends Accountable> optional = service.dereference(ap);
-    assertThat(optional.isPresent()).isFalse();
   }
 
   @Ignore

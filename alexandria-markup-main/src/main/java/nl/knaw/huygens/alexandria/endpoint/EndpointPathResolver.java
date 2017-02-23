@@ -1,5 +1,8 @@
 package nl.knaw.huygens.alexandria.endpoint;
 
+import java.util.Map;
+import java.util.Optional;
+
 /*
  * #%L
  * alexandria-main
@@ -23,13 +26,10 @@ package nl.knaw.huygens.alexandria.endpoint;
  */
 
 import javax.inject.Singleton;
-import java.util.Map;
-import java.util.Optional;
 
 import com.google.common.collect.ImmutableMap;
 
 import nl.knaw.huygens.alexandria.api.EndpointPaths;
-import nl.knaw.huygens.alexandria.endpoint.search.SearchResult;
 import nl.knaw.huygens.alexandria.model.AlexandriaResource;
 import nl.knaw.huygens.alexandria.model.Identifiable;
 
@@ -38,7 +38,6 @@ public class EndpointPathResolver {
   private static final Map<Class<? extends Identifiable>, String> IDENTIFIABLE_ENDPOINTS //
       = ImmutableMap.<Class<? extends Identifiable>, String>builder()
       .put(AlexandriaResource.class, EndpointPaths.RESOURCES)
-      .put(SearchResult.class, EndpointPaths.SEARCHES)
       .build();
 
   public Optional<String> pathOf(Class<? extends Identifiable> identifiableClass) {

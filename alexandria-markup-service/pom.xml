@@ -6,12 +6,12 @@
     <artifactId>alexandria-markup</artifactId>
     <version>2.0-SNAPSHOT</version>
   </parent>
-  <artifactId>alexandria-service</artifactId>
+  <artifactId>alexandria-markup-service</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>alexandria-main</artifactId>
+      <artifactId>alexandria-markup-main</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

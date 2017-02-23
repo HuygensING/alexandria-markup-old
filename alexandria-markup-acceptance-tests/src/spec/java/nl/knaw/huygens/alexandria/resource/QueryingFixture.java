@@ -28,11 +28,12 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.concordion.integration.junit4.ConcordionRunner;
+import org.junit.runner.RunWith;
+
 import nl.knaw.huygens.alexandria.exception.NotFoundException;
 import nl.knaw.huygens.alexandria.model.AlexandriaResource;
 import nl.knaw.huygens.alexandria.model.TentativeAlexandriaProvenance;
-import org.concordion.integration.junit4.ConcordionRunner;
-import org.junit.runner.RunWith;
 
 @RunWith(ConcordionRunner.class)
 public class QueryingFixture extends ResourcesBase {
@@ -48,12 +49,6 @@ public class QueryingFixture extends ResourcesBase {
 
   public void withReference(String reference) {
     resource.setCargo(reference);
-  }
-
-  public void withAnnotation(String id) {
-    TentativeAlexandriaProvenance provenance = new TentativeAlexandriaProvenance("who", Instant.now(), "why");
-    AlexandriaAnnotationBody body = new AlexandriaAnnotationBody(UUID.fromString(id), "<type>", "<value>", provenance);
-    resource.addAnnotation(new AlexandriaAnnotation(UUID.fromString(id), body, provenance));
   }
 
   public void noSuchResource(String id) {

@@ -23,7 +23,6 @@ package nl.knaw.huygens.alexandria.service;
  */
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -42,14 +41,12 @@ import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONIo;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableMap;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 import nl.knaw.huygens.Log;
-import nl.knaw.huygens.alexandria.api.model.AlexandriaState;
 import nl.knaw.huygens.alexandria.api.model.CommandResponse;
 import nl.knaw.huygens.alexandria.api.model.text.view.ElementDefinition;
 import nl.knaw.huygens.alexandria.api.model.text.view.TextView;
@@ -109,31 +106,6 @@ public class TinkerPopServiceTest extends AlexandriaTest {
   // }
   // }
 
-  @Ignore
-  @Test
-  public void testDeleteTentativeAnnotationWithUniqueBodyRemovesAnnotationAndBody() {
-    // TODO
-    // TinkerPopService s = new TestStorage();
-    AlexandriaAnnotation annotation = mock(AlexandriaAnnotation.class);
-    service.deleteAnnotation(annotation);
-  }
-
-  @Ignore
-  @Test
-  public void testDeleteTentativeAnnotationWithSharedBodyRemovesAnnotationAndLeavesBody() {
-    // TODO
-    AlexandriaAnnotation annotation = mock(AlexandriaAnnotation.class);
-    service.deleteAnnotation(annotation);
-  }
-
-  @Ignore
-  @Test
-  public void testDeleteConfirmedAnnotationSetsStateToDeleted() {
-    // TODO
-    AlexandriaAnnotation annotation = mock(AlexandriaAnnotation.class);
-    service.deleteAnnotation(annotation);
-  }
-
   @Test
   public void testGraphDrop() throws IOException {
     TinkerGraph graph = TinkerGraph.open();
@@ -152,43 +124,6 @@ public class TinkerPopServiceTest extends AlexandriaTest {
   public void testUuid() {
     UUID u = UUID.fromString("11111111-1111-1111-1111-111111111111");
     assertThat(u).isNotNull();
-  }
-
-  @Test
-  public void testDeprecateAnnotation() {
-    AlexandriaResource resource = aResource();
-    service.createOrUpdateResource(resource);
-
-    UUID annotationBodyId = UUID.randomUUID();
-    TentativeAlexandriaProvenance provenance1 = new TentativeAlexandriaProvenance("who1", Instant.now(), "why1");
-    AlexandriaAnnotationBody body1 = service.createAnnotationBody(annotationBodyId, "type", "value", provenance1);
-
-    UUID annotationId = UUID.randomUUID();
-    TentativeAlexandriaProvenance provenance2 = new TentativeAlexandriaProvenance("who2", Instant.now(), "why2");
-    AlexandriaAnnotation annotation = new AlexandriaAnnotation(annotationId, body1, provenance2);
-    service.annotateResourceWithAnnotation(resource, annotation);
-    service.confirmAnnotation(annotationId);
-    assertThat(annotation.getRevision()).isEqualTo(0);
-
-    UUID annotationBodyId2 = UUID.randomUUID();
-    TentativeAlexandriaProvenance provenance3 = new TentativeAlexandriaProvenance("who3", Instant.now(), "why3");
-    AlexandriaAnnotationBody body2 = service.createAnnotationBody(annotationBodyId2, "type", "updated value", provenance3);
-    TentativeAlexandriaProvenance provenance4 = new TentativeAlexandriaProvenance("who4", Instant.now(), "why4");
-    AlexandriaAnnotation updatedAnnotation = new AlexandriaAnnotation(annotationId, body2, provenance4);
-
-    // when
-    AlexandriaAnnotation newAnnotation = service.deprecateAnnotation(annotationId, updatedAnnotation);
-
-    // then expect
-    assertThat(newAnnotation.getId()).isEqualTo(annotationId);
-    assertThat(newAnnotation.getState()).isEqualTo(AlexandriaState.CONFIRMED);
-    assertThat(newAnnotation.getBody().getType()).isEqualTo("type");
-    assertThat(newAnnotation.getBody().getValue()).isEqualTo("updated value");
-    assertThat(newAnnotation.getAnnotatablePointer().getIdentifier()).isEqualTo(resource.getId().toString());
-    assertThat(newAnnotation.getProvenance().getWhen()).isEqualTo(provenance4.getWhen());
-    assertThat(newAnnotation.getProvenance().getWho()).isEqualTo(provenance4.getWho());
-    assertThat(newAnnotation.getProvenance().getWhy()).isEqualTo(provenance4.getWhy());
-    assertThat(newAnnotation.getRevision()).isEqualTo(1);
   }
 
   private void logGraph(TinkerGraph graph) throws IOException {
@@ -230,36 +165,6 @@ public class TinkerPopServiceTest extends AlexandriaTest {
     // I should be able to make a subresource on this new resource with the same value for sub
     Optional<AlexandriaResource> oResource1 = service.findSubresourceWithSubAndParentId(sub, resourceId1);
     assertThat(oResource1.isPresent()).isFalse();
-  }
-
-  @Test
-  public void testDeletingAnAnnotationWithStateDeletedDoesNotFail() {
-    AlexandriaResource resource = aResource();
-    service.createOrUpdateResource(resource);
-
-    UUID annotationBodyId = UUID.randomUUID();
-    TentativeAlexandriaProvenance provenance1 = new TentativeAlexandriaProvenance("who1", Instant.now(), "why1");
-    AlexandriaAnnotationBody body1 = service.createAnnotationBody(annotationBodyId, "type", "value", provenance1);
-
-    UUID annotationId = UUID.randomUUID();
-    TentativeAlexandriaProvenance provenance2 = new TentativeAlexandriaProvenance("who2", Instant.now(), "why2");
-    AlexandriaAnnotation annotation = new AlexandriaAnnotation(annotationId, body1, provenance2);
-
-    service.annotateResourceWithAnnotation(resource, annotation);
-    annotation = service.readAnnotation(annotationId).get();
-    assertThat(annotation.getState()).isEqualTo(AlexandriaState.TENTATIVE);
-
-    service.confirmAnnotation(annotationId);
-    annotation = service.readAnnotation(annotationId).get();
-    assertThat(annotation.getState()).isEqualTo(AlexandriaState.CONFIRMED);
-
-    service.deleteAnnotation(annotation);
-    annotation = service.readAnnotation(annotationId).get();
-    assertThat(annotation.getState()).isEqualTo(AlexandriaState.DELETED);
-
-    service.deleteAnnotation(annotation);
-    annotation = service.readAnnotation(annotationId).get();
-    assertThat(annotation.getState()).isEqualTo(AlexandriaState.DELETED);
   }
 
   @Test

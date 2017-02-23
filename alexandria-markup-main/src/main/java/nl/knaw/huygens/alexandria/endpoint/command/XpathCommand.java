@@ -53,7 +53,8 @@ import org.w3c.dom.NodeList;
 
 import nl.knaw.huygens.alexandria.api.model.CommandResponse;
 import nl.knaw.huygens.alexandria.api.model.Commands;
-import nl.knaw.huygens.alexandria.endpoint.command.XpathCommand.XPathResult.Type;
+import nl.knaw.huygens.alexandria.api.model.text.XPathResult;
+import nl.knaw.huygens.alexandria.api.model.text.XPathResult.Type;
 import nl.knaw.huygens.alexandria.service.AlexandriaService;
 import nl.knaw.huygens.alexandria.textgraph.TextGraphUtil;
 import nl.knaw.huygens.tei.QueryableDocument;
@@ -197,27 +198,5 @@ public class XpathCommand extends ResourcesCommand {
 
   private void addXPathError() {
     commandResponse.addErrorLine("Parameter '" + PARAMETER_XPATH + "' should be a valid xpath query.");
-  }
-
-  public static class XPathResult {
-    public enum Type {
-      BOOLEAN, NUMBER, STRING, NODESET
-    }
-
-    Object result;
-    Type type;
-
-    public XPathResult(Type type, Object result) {
-      this.type = type;
-      this.result = result;
-    }
-
-    public Object getResult() {
-      return result;
-    }
-
-    public Type getType() {
-      return type;
-    }
   }
 }

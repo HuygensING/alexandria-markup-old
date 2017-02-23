@@ -3,15 +3,15 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>nl.knaw.huygens.alexandria</groupId>
-    <artifactId>alexandria</artifactId>
+    <artifactId>alexandria-markup</artifactId>
     <version>2.0-SNAPSHOT</version>
   </parent>
-  <artifactId>alexandria-java-client</artifactId>
+  <artifactId>alexandria-markup-java-client</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>alexandria-api</artifactId>
+      <artifactId>alexandria-markup-api</artifactId>
       <version>${project.version}</version>
     </dependency>
 
