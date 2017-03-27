@@ -4,6 +4,6 @@ RUN useradd -m alexandria
 USER alexandria
 RUN mkdir -p /home/alexandria/.alexandria
 WORKDIR ${wd}
-ADD target/alexandria-markup-server.jar ${wd}/
+ADD target/alexandria-markup-xml-server.jar ${wd}/
 EXPOSE 2015
-ENTRYPOINT java -jar alexandria-markup-server.jar
+ENTRYPOINT java -jar alexandria-markup-xml-server.jar
