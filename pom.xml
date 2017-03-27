@@ -18,7 +18,7 @@
     <module>alexandria-markup-service</module>
     <module>alexandria-markup-service-tinkerpop-neo4j</module>
     <module>alexandria-markup-service-tinkerpop-tinkergraph</module>
-    <module>alexandria-markup-dropwizard</module>
+    
   </modules>
 
   <properties>
