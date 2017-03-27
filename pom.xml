@@ -18,6 +18,7 @@
     <module>alexandria-markup-service</module>
     <module>alexandria-markup-service-tinkerpop-neo4j</module>
     <module>alexandria-markup-service-tinkerpop-tinkergraph</module>
+    <module>alexandria-markup-dropwizard</module>
   </modules>
 
   <properties>
@@ -42,6 +43,7 @@
 
     <commons-lang3.version>3.5</commons-lang3.version>
     <commons-io.version>2.5</commons-io.version>
+    <dropwizard.version>1.1.0</dropwizard.version>
     <guava.version>20.0</guava.version>
     <guice.version>4.0</guice.version>
     <jackson.version>2.8.4</jackson.version>
@@ -129,7 +131,7 @@
     <!-- Settings for maven-scm-publish-plugin used to publish site to GitHub -->
     <scmpublish.checkinComment>Publishing Site Docs for
       ${project.artifactId}:${project.version}</scmpublish.checkinComment>
-    <scmpublish.pubScmUrl>scm:git:git@github.com:huygensING/alexandria.git</scmpublish.pubScmUrl>
+    <scmpublish.pubScmUrl>scm:git:git@github.com:huygensING/alexandria-markup.git</scmpublish.pubScmUrl>
     <scmpublish.scm.branch>gh-pages</scmpublish.scm.branch>
 
     <project.license.name>GNU General Public License</project.license.name>
@@ -295,7 +297,7 @@
     <site>
       <id>huygens.site</id>
       <!-- This is used by maven-scm-publish-plugin -->
-      <url>scm:git:git@github.com:huygensING/alexandria.git</url>
+      <url>scm:git:git@github.com:huygensING/alexandria-markup.git</url>
     </site>
   </distributionManagement>
 
@@ -584,7 +586,7 @@
   </reporting>
 
   <scm>
-    <connection>scm:git:git@github.com:huygensING/alexandria.git</connection>
+    <connection>scm:git:git@github.com:huygensING/alexandria-markup.git</connection>
     <tag>HEAD</tag>
   </scm>
 
