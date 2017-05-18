@@ -1,5 +1,7 @@
 package nl.knaw.huygens.alexandria.textgraph;
 
+import java.util.ArrayDeque;
+
 /*
  * #%L
  * alexandria-main
@@ -22,7 +24,7 @@ package nl.knaw.huygens.alexandria.textgraph;
  * #L%
  */
 
-import java.util.Stack;
+import java.util.Deque;
 
 import nl.knaw.huygens.tei.Comment;
 import nl.knaw.huygens.tei.CommentHandler;
@@ -39,8 +41,8 @@ import nl.knaw.huygens.tei.handlers.XmlTextHandler;
 public class XmlVisitor extends DelegatingVisitor<XmlContext> implements CommentHandler<XmlContext>, ElementHandler<XmlContext>, ProcessingInstructionHandler<XmlContext> {
 
   private static ParseResult result;
-  private Stack<Integer> startIndexStack = new Stack<>();
-  private Stack<Element> elementStack = new Stack<>();
+  private Deque<Integer> startIndexStack = new ArrayDeque<>();
+  private Deque<Element> elementStack = new ArrayDeque<>();
   private static boolean lastNodeWasText = false;
 
   public XmlVisitor(ParseResult result) {
@@ -71,7 +73,7 @@ public class XmlVisitor extends DelegatingVisitor<XmlContext> implements Comment
         .setMilestone(element.hasNoChildren())//
         .setFirstSegmentIndex(startIndexStack.pop())//
         .setLastSegmentIndex(result.getTextSegments().size() - 1)//
-        ;
+    ;
     result.getXmlAnnotations().add(xmlAnnotation);
     return Traversal.NEXT;
   }
