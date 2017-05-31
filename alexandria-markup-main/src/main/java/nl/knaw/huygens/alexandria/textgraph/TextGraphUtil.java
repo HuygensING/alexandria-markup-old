@@ -32,14 +32,15 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
-import java.util.Stack;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -164,7 +165,7 @@ public class TextGraphUtil {
 
   protected static class TextViewContext {
     private Map<String, ElementView> elementViewMap;
-    private Stack<TextAnnotation> ignoredAnnotationStack = new Stack<>();
+    private Deque<TextAnnotation> ignoredAnnotationStack = new ArrayDeque<>();
     private List<TextAnnotation> overruledTextAnnotations = Lists.newArrayList();
 
     public TextViewContext(TextView textView) {

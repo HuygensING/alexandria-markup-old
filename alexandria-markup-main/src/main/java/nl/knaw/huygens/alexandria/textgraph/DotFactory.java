@@ -1,5 +1,7 @@
 package nl.knaw.huygens.alexandria.textgraph;
 
+import java.util.ArrayDeque;
+
 /*
  * #%L
  * alexandria-main
@@ -24,8 +26,8 @@ package nl.knaw.huygens.alexandria.textgraph;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -41,7 +43,7 @@ public class DotFactory {
         .append("  ranksep=1.0\n\n");
     AtomicInteger textCounter = new AtomicInteger(0);
     AtomicInteger annotationCounter = new AtomicInteger(0);
-    Stack<Integer> openAnnotations = new Stack<>();
+    Deque<Integer> openAnnotations = new ArrayDeque<>();
     Multimap<Integer, Integer> annotationDepthMap = ArrayListMultimap.create();
     service.runInTransaction(() -> service.getTextGraphSegmentStream(resourceId, new ArrayList<List<String>>()).forEach((s) -> {
       int tn = textCounter.getAndIncrement();
@@ -105,7 +107,7 @@ public class DotFactory {
         .append("\"];\n");
   }
 
-  private static void appendParentAnnotationEdge(StringBuilder stringBuilder, int an, Stack<Integer> parents) {
+  private static void appendParentAnnotationEdge(StringBuilder stringBuilder, int an, Deque<Integer> parents) {
     if (!parents.isEmpty()) {
       Integer parent = parents.peek();
       stringBuilder.append("  a").append(parent).append(" -> a").append(an).append(";\n");
